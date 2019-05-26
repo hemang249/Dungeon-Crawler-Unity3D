@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
     private RaycastHit hit;
+    private bool hitPressed = false;
     private Animator animator;
     void Start()
     {
@@ -15,12 +16,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        
-        if(Physics.Raycast(transform.position , transform.forward , hit , 2))
-        {
-            
-        }
+        MovePlayer();  
     }
 
     void MovePlayer()

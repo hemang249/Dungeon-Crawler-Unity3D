@@ -25,17 +25,11 @@ public class ChestScript : MonoBehaviour
         if(other.gameObject.tag == "Player" )
         {
         
-            animator.SetBool("isOpened",isOpened);
-            isOpened = true;
-            Invoke("ResetAnimator",0.2f);
-          
-            
+            animator.Play("ChestOpening",0);
+            Destroy(this.gameObject,0.5f);
         }
         
     } 
 
-    void ResetAnimator()
-    {
-        animator.SetBool("isOpened",isOpened);
-    }
+  
 }
