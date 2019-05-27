@@ -5,10 +5,17 @@ using UnityEngine;
 public class SwordScript : MonoBehaviour
 {
     private bool hitPressed;
+    [SerializeField] GameObject swordHolder;
     [SerializeField] float damagePerSwing;
-    private Animator animator;
+    [SerializeField] bool isPickedUp = false;
+    [SerializeField] ParticleSystem BloodParticles;
+    private Animator animator;  
+    [SerializeField] GameObject GoldCoin;
+    private AudioSource audioSource;
+    [SerializeField] int chanceOfGold = 5; // 1/5
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         hitPressed = false;
         animator = GetComponent<Animator>();
     }
@@ -16,22 +23,70 @@ public class SwordScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Physics2D.IgnoreLayerCollision(8,10);
+        Physics2D.IgnoreLayerCollision(10,11);
+
+        if(isPickedUp)
+            Physics2D.IgnoreLayerCollision(8,10);
+        
+        SwingSword();
+    }
+
+    void SwingSword()
+    {
         if(Input.GetKey(KeyCode.Space) && !hitPressed)
         {
             hitPressed = true;
             animator.SetBool("HitPressed",hitPressed);
-            Invoke("ResetSword",0.2f);
+            audioSource.Play();
+            Invoke("ResetSword",0.4f);
         }
+    }
+    void ResetSword()
+    {
+        hitPressed = false;
+        animator.SetBool("HitPressed",hitPressed);
     }
 
     
 
     void OnCollisionEnter2D(Collision2D other) 
     {
+      
         if(other.gameObject.tag == "Enemy")
         {
-            Destroy(other.gameObject);
-        }    
+          
+            ParticleSystem bloodParticles = Instantiate(BloodParticles , other.transform.position , other.transform.rotation);
+            SpawnGoldOnEnemyDeath(other);
+            
+            Destroy(other.gameObject,0.1f);
+            
+           
+            Destroy(bloodParticles , 0.5f);
+           
+        }
+
+        if(!isPickedUp && other.gameObject.CompareTag("Player"))
+        {
+           PickUpSword();
+        }
+    }
+
+    void SpawnGoldOnEnemyDeath(Collision2D other)
+    {
+        int chance = Random.Range(0,chanceOfGold);
+
+        if(chance == 1)
+        {
+            Instantiate(GoldCoin , other.transform.position , other.transform.rotation );
+        }
+
+    }
+
+    void PickUpSword()
+    {
+        swordHolder = GameObject.FindGameObjectWithTag("Player");
+        isPickedUp = true;
+        this.transform.parent = swordHolder.transform;
+        this.transform.localPosition = new Vector3(0,0,0);
     }
 }

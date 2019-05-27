@@ -7,12 +7,14 @@ public class GreenHogScript : MonoBehaviour
     [SerializeField] float damage;
     private GameObject player;
     private bool isAttacking;
+    private AudioSource audioSource;
     private Animator animator;
     [SerializeField] float attackSpeed = 5f;
     
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         isAttacking = false;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -23,7 +25,9 @@ public class GreenHogScript : MonoBehaviour
     {
         if(isAttacking)
         {
+           
             Attack();
+            
         }
     }
 
@@ -31,8 +35,10 @@ public class GreenHogScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            
-            isAttacking = true;    
+
+            audioSource.Play();
+            isAttacking = true;
+           
         }    
     }
 
@@ -43,4 +49,7 @@ public class GreenHogScript : MonoBehaviour
         transform.position = Vector3.MoveTowards( transform.position, player.transform.position, attackSpeed * Time.deltaTime);
         animator.SetBool("isAttacking",isAttacking);    
      }
+
+    
+
 }

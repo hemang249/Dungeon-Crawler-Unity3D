@@ -8,8 +8,10 @@ public class PlayerScript : MonoBehaviour
     private RaycastHit hit;
     private bool hitPressed = false;
     private Animator animator;
+    private int Coins = 0;
     void Start()
     {
+        
         animator = GetComponent<Animator>();
     }
 
@@ -30,16 +32,28 @@ public class PlayerScript : MonoBehaviour
         {
             transform.position += moveX *  Time.deltaTime;
             animator.SetFloat("Speed",Mathf.Abs(xAxis));
+            
         }
 
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
         {
             transform.position += moveY * Time.deltaTime;
             animator.SetFloat("Speed",yAxis);
+            
         }
 
         
 
 
+    }
+
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("GoldCoin"))
+        {
+            Destroy(other.gameObject);
+            Coins++;
+            Debug.Log(Coins);
+        }    
     }
 }
