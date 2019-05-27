@@ -59,9 +59,7 @@ public class SwordScript : MonoBehaviour
             SpawnGoldOnEnemyDeath(other);
             
             Destroy(other.gameObject,0.1f);
-            
-           
-            Destroy(bloodParticles , 0.5f);
+            Destroy(bloodParticles , 1f);
            
         }
 

@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
     private RaycastHit hit;
     private bool hitPressed = false;
+    [SerializeField] TextMeshProUGUI CoinsText;
     private Animator animator;
     private int Coins = 0;
+    public float Health = 3f;
     void Start()
     {
         
@@ -18,6 +21,12 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        if(Health <= 0)
+        {
+            Time.timeScale = 0;
+        }
+
         MovePlayer();  
     }
 
@@ -53,6 +62,7 @@ public class PlayerScript : MonoBehaviour
         {
             Destroy(other.gameObject);
             Coins++;
+            CoinsText.text = "Coins: " + Coins.ToString();
             Debug.Log(Coins);
         }    
     }

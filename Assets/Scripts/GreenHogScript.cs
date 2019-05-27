@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class GreenHogScript : MonoBehaviour
 {
-    [SerializeField] float damage;
+    [SerializeField] float damage = 0.5f;
     private GameObject player;
     private bool isAttacking;
     private AudioSource audioSource;
+    private GameObject Player;
+    
     private Animator animator;
+    
     [SerializeField] float attackSpeed = 5f;
     
     // Start is called before the first frame update
@@ -16,6 +19,7 @@ public class GreenHogScript : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player");
         isAttacking = false;
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -39,6 +43,16 @@ public class GreenHogScript : MonoBehaviour
             audioSource.Play();
             isAttacking = true;
            
+        }    
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            player.GetComponent<PlayerScript>().Health -= 0.5f;
+            transform.position += new Vector3(0,1,0) * 3 ;
+            
         }    
     }
 
