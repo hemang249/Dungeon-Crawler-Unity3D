@@ -6,8 +6,7 @@ using TMPro;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
-    private RaycastHit hit;
-    private bool hitPressed = false;
+   
     [SerializeField] TextMeshProUGUI CoinsText;
     private Animator animator;
     private int Coins = 0;
@@ -22,15 +21,15 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
        
-        if(Health <= 0)
+        if(Health <= 0)     // Check if player has died
         {
-            Time.timeScale = 0;
+            //TODO: Add player death Screen
         }
 
         MovePlayer();  
     }
 
-    void MovePlayer()
+    void MovePlayer()       // Handles Player Movement
     {
         float xAxis = Input.GetAxis("Horizontal") * speed;
         float yAxis = Input.GetAxis("Vertical") * speed;
@@ -58,11 +57,11 @@ public class PlayerScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject.CompareTag("GoldCoin"))
+        if(other.gameObject.CompareTag("GoldCoin"))     // Pick Up Gold Coin when Triggered
         {
             Destroy(other.gameObject);
-            Coins++;
-            CoinsText.text = "Coins: " + Coins.ToString();
+            Coins++;                                      
+            CoinsText.text = "Coins: " + Coins.ToString();     // Update GUI
             Debug.Log(Coins);
         }    
     }
