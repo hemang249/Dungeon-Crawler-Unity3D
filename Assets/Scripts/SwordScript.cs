@@ -26,8 +26,10 @@ public class SwordScript : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10,11);
 
         if(isPickedUp)
+        {
             Physics2D.IgnoreLayerCollision(8,10);
-        
+            this.transform.localPosition = new Vector3(0,0,0);
+        }
         SwingSword();
     }
 
@@ -82,7 +84,7 @@ public class SwordScript : MonoBehaviour
 
     void PickUpSword()
     {
-        swordHolder = GameObject.FindGameObjectWithTag("Player");
+        swordHolder = GameObject.FindGameObjectWithTag("SwordHolder");
         isPickedUp = true;
         this.transform.parent = swordHolder.transform;
         this.transform.localPosition = new Vector3(0,0,0);

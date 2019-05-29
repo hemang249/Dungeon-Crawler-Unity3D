@@ -20,7 +20,7 @@ public class UI : MonoBehaviour
         UpdateHealthUI();
     }
 
-    void UpdateHealthUI()        // Update UI Hearts Based on Current Health of the player
+    public void UpdateHealthUI()        // Update UI Hearts Based on Current Health of the player
     {
         switch(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().Health)
         {
@@ -51,6 +51,7 @@ public class UI : MonoBehaviour
                     HealthUI[1].sprite = hearts[0];
                     HealthUI[0].sprite = hearts[0];
                     break;
+            default: break;
 
         }
     }

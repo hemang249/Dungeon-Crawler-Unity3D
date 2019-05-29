@@ -63,6 +63,19 @@ public class PlayerScript : MonoBehaviour
             Coins++;                                      
             CoinsText.text = "Coins: " + Coins.ToString();     // Update GUI
             Debug.Log(Coins);
-        }    
+        }
+
+        if(other.gameObject.CompareTag("Heart"))
+        {
+            Destroy(other.gameObject);
+            
+            Health += 1f;
+            if(Health > 3)
+            {
+                Health = 3f;
+            }
+
+
+        }
     }
 }
