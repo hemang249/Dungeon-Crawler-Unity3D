@@ -7,6 +7,7 @@ public class DruidEnemyScript : MonoBehaviour
     private bool isAttacking = false;
     [SerializeField] GameObject Emitter;
     [SerializeField] GameObject Orb;
+    [SerializeField] AudioSource ShootAudio;
    
     // Update is called once per frame
     void Update()
@@ -14,6 +15,7 @@ public class DruidEnemyScript : MonoBehaviour
        if(isAttacking)
        {
           Shoot();
+          ShootAudio.Play();
        } 
     }
 
@@ -22,7 +24,7 @@ public class DruidEnemyScript : MonoBehaviour
         isAttacking = false;
         GameObject projectile = Instantiate(Orb , Emitter.transform.position , Emitter.transform.rotation);
         Destroy(projectile , 4f);
-        Invoke("ResetStaff",1f);
+        Invoke("ResetStaff",3f);
     }
 
     void ResetStaff()
